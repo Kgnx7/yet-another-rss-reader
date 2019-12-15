@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <h1>rss reader</h1>
+    <div class="container">
+      <h1>rss reader</h1>
+    </div>
   </div>
 </template>
 
@@ -9,6 +11,11 @@ export default {
   name: 'app',
   components: {
     
+  },
+  data() {
+    return  {
+      rssChannels: [],
+    }
   }
 }
 </script>
