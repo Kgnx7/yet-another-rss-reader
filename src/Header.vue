@@ -1,5 +1,5 @@
 <template>
-  <header class="header" id="header">
+  <header class="header" id="header-comp">
     <h1 class="header__h1">{{title}}</h1>
     <small class="header__small">{{desc}}</small>
   </header>
@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'header',
+  name: 'header-comp',
   props: {
     title: String,
     desc: String,
