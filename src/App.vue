@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <div class="container">
+    <div class="container flex-container">
       <header-comp :title="title" :desc="desc"/>
-      <main>
+      <main class="main">
         <rss-channels-list v-bind:channels="rssChannels"/>
       </main>
+      <footer-comp />
     </div>
   </div>
 </template>
@@ -12,12 +13,14 @@
 <script>
 import HeaderComp from "./Header.vue"
 import RssChannelsList from "./RssChannelsList.vue"
+import FooterComp from "./Footer.vue"
 
 export default {
   name: 'app',
   components: {
     HeaderComp,
-    RssChannelsList
+    RssChannelsList,
+    FooterComp
   },
   data() {
     return  {
@@ -43,6 +46,13 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .flex-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  .main {
+    flex-grow: 1;
+  }
 </style>
