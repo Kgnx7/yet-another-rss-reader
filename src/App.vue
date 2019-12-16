@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
+      <header-comp :title="title" :desc="desc"/>
       <main>
         <rss-channels-list v-bind:channels="rssChannels"/>
       </main>
@@ -9,16 +10,19 @@
 </template>
 
 <script>
-// import HeaderComp from "./Header.vue"
+import HeaderComp from "./Header.vue"
 import RssChannelsList from "./RssChannelsList.vue"
 
 export default {
   name: 'app',
   components: {
-    RssChannelsList,
+    HeaderComp,
+    RssChannelsList
   },
   data() {
     return  {
+      title: "Rss reader 🔊",
+      desc: "yet another rss reader, powered by vuejs, primitive-ui and rss-reader npm packages",
       rssChannels: [
         {
           id: 1,
