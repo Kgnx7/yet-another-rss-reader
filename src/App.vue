@@ -4,9 +4,7 @@
       <header-comp :title="title" :desc="desc"/>
 
       <main class="main flex-row">
-        <div class="flex-small">
-          <rss-channels :channels="rssChannels"/>
-        </div>
+        <rss-channels :channels="rssChannels"/>
         <div class="flex-large">
           placeholder
         </div>
@@ -61,4 +59,5 @@ export default {
   .main {
     flex-grow: 1;
   }
+
 </style>
