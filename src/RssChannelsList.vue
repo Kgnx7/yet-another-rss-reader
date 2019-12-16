@@ -33,5 +33,6 @@ export default {
   .rss-channels-list__button {
     margin: 0;
     transition: .25s;
+    /* width: 100%; */
   }
 </style>

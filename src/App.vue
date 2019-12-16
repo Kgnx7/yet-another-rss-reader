@@ -5,9 +5,7 @@
 
       <main class="main flex-row">
         <rss-channels :channels="rssChannels"/>
-        <div class="flex-large">
-          placeholder
-        </div>
+        <rss-feeds :channel="rssChannels[currentChannel-1]" class="flex-large" />
       </main>
       <footer-comp />
     </div>
@@ -17,6 +15,7 @@
 <script>
 import HeaderComp from "./Header.vue"
 import RssChannels from "./RssChannels.vue"
+import RssFeeds from "./RssFeeds.vue"
 import FooterComp from "./Footer.vue"
 
 export default {
@@ -24,12 +23,14 @@ export default {
   components: {
     HeaderComp,
     RssChannels,
+    RssFeeds,
     FooterComp
   },
   data() {
     return  {
       title: "Rss reader 🔊",
       desc: "yet another rss reader, powered by vuejs, primitive-ui and rss-reader npm packages",
+      currentChannel: 1,
       rssChannels: [
         {
           id: 1,
