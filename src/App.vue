@@ -2,8 +2,12 @@
   <div id="app">
     <div class="container flex-container">
       <header-comp :title="title" :desc="desc"/>
-      <main class="main">
+
+      <main class="main flex-row">
         <rss-channels :channels="rssChannels"/>
+        <div class="flex-large">
+          placeholder
+        </div>
       </main>
       <footer-comp />
     </div>
@@ -55,4 +59,5 @@ export default {
   .main {
     flex-grow: 1;
   }
+
 </style>

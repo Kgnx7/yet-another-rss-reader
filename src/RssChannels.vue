@@ -1,5 +1,5 @@
 <template>
-  <aside id="rss-channels">
+  <aside id="rss-channels" class="flex-small main__aside">
     <rss-channels-list v-bind:channels="channels" />
   </aside>
 </template>
@@ -19,5 +19,8 @@ export default {
 </script>
 
 <style>
-  
+  .main__aside {
+    flex-grow: 0 !important;
+    flex-basis: 400px !important;
+  }
 </style>
