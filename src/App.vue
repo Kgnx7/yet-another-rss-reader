@@ -4,10 +4,13 @@
       <header-comp :title="title" :desc="desc"/>
 
       <main class="main flex-row">
-        <rss-channels :channels="rssChannels"/>
-        <div class="flex-large">
-          placeholder
-        </div>
+        <rss-channels :channels="rssChannels" @changeCurrentChannel="changeCurrentChannel"/>
+        <rss-feeds 
+          :channel="rssChannels.find(ch => ch.id === currentChannel)" 
+          :channelMessages="channelMessages"
+          @updateFeed="updateFeed"
+          class="flex-large" 
+          />
       </main>
       <footer-comp />
     </div>
@@ -15,8 +18,10 @@
 </template>
 
 <script>
+import Parser from "rss-parser"
 import HeaderComp from "./Header.vue"
 import RssChannels from "./RssChannels.vue"
+import RssFeeds from "./RssFeeds.vue"
 import FooterComp from "./Footer.vue"
 
 export default {
@@ -24,12 +29,14 @@ export default {
   components: {
     HeaderComp,
     RssChannels,
+    RssFeeds,
     FooterComp
   },
   data() {
     return  {
       title: "Rss reader 🔊",
       desc: "yet another rss reader, powered by vuejs, primitive-ui and rss-reader npm packages",
+      currentChannel: 1,
       rssChannels: [
         {
           id: 1,
@@ -38,14 +45,34 @@ export default {
         },
         {
           id: 2,
-          title: "Все публикации подряд на Хабре",
-          link: 'https://habr.com/ru/rss/all/all/'
+          title: "Новые вопросы на StackOverflow",
+          link: 'https://stackoverflow.com/feeds/tag?tagnames=stl&sort=newest'
         },
       ],
+      channelMessages: [],
     }
   },
   methods: {
-    
+    changeCurrentChannel(newChannel) {
+      this.currentChannel = newChannel;
+      
+      this.updateFeed(this.rssChannels.find(ch => ch.id === this.currentChannel).link);
+    },
+    updateFeed(link) {
+      const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+      let parser = new Parser();
+      this.channelMessages = [];
+
+      (async () => {
+
+        let feed = await parser.parseURL(CORS_PROXY + link);
+        this.feedTitle = feed.title;
+        feed.items.forEach(item => {
+          this.channelMessages = [...this.channelMessages, item];
+        });
+
+      })();
+    }
   }
 }
 </script>

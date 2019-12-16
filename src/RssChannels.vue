@@ -1,6 +1,6 @@
 <template>
   <aside id="rss-channels" class="flex-small main__aside">
-    <rss-channels-list v-bind:channels="channels" />
+    <rss-channels-list v-bind:channels="channels" @handleChannelClick="handleChannelClick"/>
   </aside>
 </template>
 
@@ -14,6 +14,11 @@ export default {
   },
   props: {
     channels: Array,
+  },
+  methods: {
+    handleChannelClick(id) {
+      this.$emit("changeCurrentChannel", id);
+    }
   },
 }
 </script>
