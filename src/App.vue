@@ -2,8 +2,14 @@
   <div id="app">
     <div class="container flex-container">
       <header-comp :title="title" :desc="desc"/>
-      <main class="main">
-        <rss-channels :channels="rssChannels"/>
+
+      <main class="main flex-row">
+        <div class="flex-small">
+          <rss-channels :channels="rssChannels"/>
+        </div>
+        <div class="flex-large">
+          placeholder
+        </div>
       </main>
       <footer-comp />
     </div>
