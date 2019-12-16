@@ -4,7 +4,11 @@
       <header-comp :title="title" :desc="desc"/>
 
       <main class="main flex-row">
-        <rss-channels :channels="rssChannels" @changeCurrentChannel="changeCurrentChannel"/>
+        <rss-channels 
+          :channels="rssChannels"
+          @changeCurrentChannel="changeCurrentChannel"
+          @addRssChannel="addRssChannel"
+        />
         <rss-feeds 
           :channel="rssChannels.find(ch => ch.id === currentChannel)" 
           :channelMessages="channelMessages"
@@ -37,6 +41,7 @@ export default {
       title: "Rss reader 🔊",
       desc: "yet another rss reader, powered by vuejs, primitive-ui and rss-reader npm packages",
       currentChannel: 1,
+      counter: 3,
       rssChannels: [
         {
           id: 1,
@@ -72,6 +77,10 @@ export default {
         });
 
       })();
+    },
+    addRssChannel(newChannel) {
+      newChannel.id = this.counter++;
+      this.rssChannels = [...this.rssChannels, {...newChannel}];
     }
   }
 }

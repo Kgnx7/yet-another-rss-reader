@@ -27,10 +27,11 @@ export default {
   .rss-channels-list__list {
     list-style: none;
     padding: 0;
+    /* padding-right: 15px; */
   }
   .rss-channels-list__item {
-    padding: 15px 5px 0 0;
-    padding-right: 15px;
+    padding-top: 15px;
+    /* padding-right: 15px; */
   }
   .rss-channels-list__link {
     display: block;
@@ -38,6 +39,6 @@ export default {
   .rss-channels-list__button {
     margin: 0;
     transition: .25s;
-    /* width: 100%; */
+    width: 100%;
   }
 </style>
