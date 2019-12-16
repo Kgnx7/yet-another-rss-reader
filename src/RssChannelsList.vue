@@ -1,13 +1,13 @@
 <template>
-  <aside id="rss-channels-list">
-    <nav>
-      <ul>
-        <li v-for="channel in channels" v-bind:key="channel.id">
+  <nav id="rss-channels-list">
+    <ul>
+      <li v-for="channel in channels" v-bind:key="channel.id">
+        <p>
           {{ channel.title }}
-        </li>
-      </ul>
-    </nav>
-  </aside>
+        </p>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>

@@ -3,7 +3,7 @@
     <div class="container flex-container">
       <header-comp :title="title" :desc="desc"/>
       <main class="main">
-        <rss-channels-list v-bind:channels="rssChannels"/>
+        <rss-channels :channels="rssChannels"/>
       </main>
       <footer-comp />
     </div>
@@ -12,14 +12,14 @@
 
 <script>
 import HeaderComp from "./Header.vue"
-import RssChannelsList from "./RssChannelsList.vue"
+import RssChannels from "./RssChannels.vue"
 import FooterComp from "./Footer.vue"
 
 export default {
   name: 'app',
   components: {
     HeaderComp,
-    RssChannelsList,
+    RssChannels,
     FooterComp
   },
   data() {
