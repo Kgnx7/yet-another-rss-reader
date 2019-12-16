@@ -10,36 +10,28 @@
 </template>
 
 <script>
-import Parser from "rss-parser"
 import RssMsgCard from "./RssMsgCard.vue"
 
 export default {
   name: 'rss-feeds',
   data() {
     return {
-      channelMessages: [],
-      feedTitle: ""
+      feedTitle: "",
+      test: 1
     }
   },
   components: {
     RssMsgCard
   },
   props: {
-    channel: Object
+    channel: Object,
+    channelMessages: Array
+  },
+  methods: {
   },
   created() {
-    const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-    let parser = new Parser();
-
-    (async () => {
-
-      let feed = await parser.parseURL(CORS_PROXY + 'https://www.reddit.com/.rss');
-      this.feedTitle = feed.title;
-      feed.items.forEach(item => {
-        this.channelMessages = [...this.channelMessages, item];
-      });
-
-    })();
+    // it should be uncommented if you want to download rss feed from channel 1 by default
+    // this.$emit('updateFeed', this.channel.link);
   }
 }
 </script>
