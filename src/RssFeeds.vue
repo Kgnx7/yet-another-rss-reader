@@ -1,12 +1,17 @@
 <template>
   <article id="rss-feeds" class="main__article feed">
     <h3 class="feed__header">{{feedTitle}}</h3>
-
+    <ul class="feed__list">
+      <li v-for="msg in channelMessages" v-bind:key="msg.id">
+        <rss-msg-card :msg="msg"/>
+      </li>
+    </ul>
   </article>
 </template>
 
 <script>
 import Parser from "rss-parser"
+import RssMsgCard from "./RssMsgCard.vue"
 
 export default {
   name: 'rss-feeds',
@@ -17,6 +22,7 @@ export default {
     }
   },
   components: {
+    RssMsgCard
   },
   props: {
     channel: Object
@@ -41,6 +47,10 @@ export default {
 <style scoped>
   .feed__header {
     margin: 0;
-    
+  }
+
+  .feed__list {
+    list-style: none;
+    padding: 0;
   }
 </style>
