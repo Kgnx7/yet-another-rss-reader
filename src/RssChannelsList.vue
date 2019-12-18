@@ -1,5 +1,6 @@
 <template>
   <nav id="rss-channels-list">
+    <h3 class="rss-channels-list__counter">Total amount of RSS channels: {{channels.length}}</h3>
     <ul class="rss-channels-list__list">
       <li v-for="channel in channels" :key="channel.id" class="rss-channels-list__item">
 
@@ -13,7 +14,6 @@
         <details class="rss-channels-list__options">
           <summary>Details</summary>
           <div class="options__wrapper">
-            <!-- <p>Rss channel link: <a :href="channel.link"><small class="rss-channels-list__link">{{ channel.link }}</small></a></p> -->
             <p class="rss-channels-link__p">Rss channel link: <a :href="channel.link"><small class="rss-channels-list__link">{{ channel.link }}</small></a></p>
 
             <button 
@@ -80,5 +80,11 @@ export default {
 
   .rss-channels-link__p {
     margin-bottom: 10px;
+  }
+
+  .rss-channels-list__counter {
+    font-size: 1rem;
+    margin: 0;
+    margin-top: 15px;
   }
 </style>
