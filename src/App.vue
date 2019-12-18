@@ -7,6 +7,7 @@
         <rss-channels 
           :channels="rssChannels"
           @changeCurrentChannel="changeCurrentChannel"
+          @handleDeleteChannel="deleteChannel"
           @addRssChannel="addRssChannel"
         />
         <rss-feeds 
@@ -42,6 +43,7 @@ export default {
       desc: "yet another rss reader, powered by vuejs, primitive-ui and rss-reader npm packages",
       currentChannel: 1,
       counter: 3,
+      debag: null,
       rssChannels: [
         {
           id: 1,
@@ -62,6 +64,10 @@ export default {
       this.currentChannel = newChannel;
       
       this.updateFeed(this.rssChannels.find(ch => ch.id === this.currentChannel).link);
+    },
+    deleteChannel(id) {
+      this.debag = id;
+      this.rssChannels = this.rssChannels.filter(channel => channel.id != id);
     },
     updateFeed(link) {
       const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
