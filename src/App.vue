@@ -10,12 +10,20 @@
           @handleDeleteChannel="deleteChannel"
           @addRssChannel="addRssChannel"
         />
-        <rss-feeds 
-          :channel="rssChannels.find(ch => ch.id === currentChannel)" 
+
+        <router-view
+          name="rssFeeds"
+          :channels="rssChannels"
           :channelMessages="channelMessages"
           @updateFeed="updateFeed"
-          class="flex-large" 
-          />
+        />
+        <router-view
+          name="rssMsg"
+        />
+        <router-view
+          name="selectChannelMsg"
+        />
+
       </main>
       <footer-comp />
     </div>
@@ -26,7 +34,7 @@
 import Parser from "rss-parser"
 import HeaderComp from "./Header.vue"
 import RssChannels from "./RssChannels.vue"
-import RssFeeds from "./RssFeeds.vue"
+// import RssFeeds from "./RssFeeds.vue"
 import FooterComp from "./Footer.vue"
 
 export default {
@@ -34,7 +42,7 @@ export default {
   components: {
     HeaderComp,
     RssChannels,
-    RssFeeds,
+    // RssFeeds,
     FooterComp
   },
   data() {
@@ -70,6 +78,7 @@ export default {
       this.rssChannels = this.rssChannels.filter(channel => channel.id != id);
     },
     updateFeed(link) {
+
       const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
       let parser = new Parser();
       this.channelMessages = [];

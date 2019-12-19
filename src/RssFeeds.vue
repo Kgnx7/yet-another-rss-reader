@@ -1,5 +1,5 @@
 <template>
-  <article id="rss-feeds" class="main__article feed">
+  <article id="rss-feeds" class="main__article flex-large">
     <h3 class="feed__header">{{feedTitle}}</h3>
     <ul class="feed__list">
       <li v-for="msg in channelMessages" v-bind:key="msg.id">
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import Parser from "rss-parser"
 import RssMsgCard from "./RssMsgCard.vue"
 
 export default {
@@ -17,21 +18,38 @@ export default {
   data() {
     return {
       feedTitle: "",
-      test: 1
+      test: 1,
+      channel: this.channels.find(channel => channel.id == this.$route.params.id)
     }
   },
   components: {
     RssMsgCard
   },
   props: {
-    channel: Object,
-    channelMessages: Array
+    channels: Array,
+    channelMessages: Array,
   },
   methods: {
+
+     updateFeed(link) {
+      const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+      let parser = new Parser();
+      this.channelMessages = [];
+
+      (async () => {
+
+        let feed = await parser.parseURL(CORS_PROXY + link);
+        this.feedTitle = feed.title;
+        feed.items.forEach(item => {
+          this.channelMessages = [...this.channelMessages, item];
+        });
+
+      })();
+    },
+
   },
   created() {
-    // it should be uncommented if you want to download rss feed from channel 1 by default
-    // this.$emit('updateFeed', this.channel.link);
+    this.$emit('updateFeed', this.channel.link);
   }
 }
 </script>
