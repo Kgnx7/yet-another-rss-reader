@@ -6,16 +6,13 @@
       <main class="main flex-row">
         <rss-channels 
           :channels="rssChannels"
-          @changeCurrentChannel="changeCurrentChannel"
           @handleDeleteChannel="deleteChannel"
           @addRssChannel="addRssChannel"
         />
-
         <router-view
           name="rssFeeds"
           :channels="rssChannels"
           :channelMessages="channelMessages"
-          @updateFeed="updateFeed"
         />
         <router-view
           name="rssMsg"
@@ -23,18 +20,17 @@
         <router-view
           name="selectChannelMsg"
         />
-
       </main>
+
       <footer-comp />
     </div>
   </div>
 </template>
 
 <script>
-import Parser from "rss-parser"
+// import Parser from "rss-parser"
 import HeaderComp from "./Header.vue"
 import RssChannels from "./RssChannels.vue"
-// import RssFeeds from "./RssFeeds.vue"
 import FooterComp from "./Footer.vue"
 
 export default {
@@ -42,7 +38,6 @@ export default {
   components: {
     HeaderComp,
     RssChannels,
-    // RssFeeds,
     FooterComp
   },
   data() {
@@ -68,30 +63,9 @@ export default {
     }
   },
   methods: {
-    changeCurrentChannel(newChannel) {
-      this.currentChannel = newChannel;
-      
-      this.updateFeed(this.rssChannels.find(ch => ch.id === this.currentChannel).link);
-    },
     deleteChannel(id) {
       this.debag = id;
       this.rssChannels = this.rssChannels.filter(channel => channel.id != id);
-    },
-    updateFeed(link) {
-
-      const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-      let parser = new Parser();
-      this.channelMessages = [];
-
-      (async () => {
-
-        let feed = await parser.parseURL(CORS_PROXY + link);
-        this.feedTitle = feed.title;
-        feed.items.forEach(item => {
-          this.channelMessages = [...this.channelMessages, item];
-        });
-
-      })();
     },
     addRssChannel(newChannel) {
       newChannel.id = this.counter++;

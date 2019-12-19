@@ -6,7 +6,6 @@
 
         <button 
           class="rss-channels-list__button full-button muted-button square-button"
-          @click="handleSetChannel(channel.id)"
         >
           {{ channel.title }}
         </button>
@@ -37,9 +36,6 @@ export default {
     channels: Array,
   },
   methods: {
-    handleSetChannel(id) {
-      this.$emit('handleSetChannel', id);
-    },
     handleDeleteChannel(id) {
       this.$emit('handleDeleteChannel', id);
     }

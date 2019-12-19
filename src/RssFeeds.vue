@@ -1,11 +1,14 @@
 <template>
   <article id="rss-feeds" class="main__article flex-large">
-    <h3 class="feed__header">{{feedTitle}}</h3>
-    <ul class="feed__list">
-      <li v-for="msg in channelMessages" v-bind:key="msg.id">
-        <rss-msg-card :msg="msg"/>
-      </li>
-    </ul>
+    <h3 class="feed__header" v-if="errMsg != null">{{errMsg}}</h3>
+    <div class="feed__wrapper" v-else>
+      <h3 class="feed__header">{{feedTitle}}</h3>
+      <ul class="feed__list">
+        <li v-for="msg in channelMessages" v-bind:key="msg.id">
+          <rss-msg-card :msg="msg"/>
+        </li>
+      </ul>
+    </div>
   </article>
 </template>
 
@@ -19,7 +22,8 @@ export default {
     return {
       feedTitle: "",
       test: 1,
-      channel: this.channels.find(channel => channel.id == this.$route.params.id)
+      channel: this.channels.find(channel => channel.id == this.$route.params.id),
+      errMsg: null
     }
   },
   components: {
@@ -27,11 +31,26 @@ export default {
   },
   props: {
     channels: Array,
-    channelMessages: Array,
+    // channelMessages: Array,
   },
   methods: {
+    isURLValid(url) {
+      
+      var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+      return !!pattern.test(url);
+    },
+    updateFeed(link) {
+      if (!this.isURLValid(link)) {
+        this.errMsg = "URL is invalid";
+        return;
+      }
+      this.errMsg = null;
 
-     updateFeed(link) {
       const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
       let parser = new Parser();
       this.channelMessages = [];
@@ -49,7 +68,9 @@ export default {
 
   },
   created() {
-    this.$emit('updateFeed', this.channel.link);
+    // if (this.channel.)
+    this.updateFeed(this.channel.link);
+    // this.$emit('updateFeed', this.channel.link);
   }
 }
 </script>
