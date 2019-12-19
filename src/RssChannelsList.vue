@@ -3,12 +3,15 @@
     <h3 class="rss-channels-list__counter">Total amount of RSS channels: {{channels.length}}</h3>
     <ul class="rss-channels-list__list">
       <li v-for="channel in channels" :key="channel.id" class="rss-channels-list__item">
-
-        <button 
-          class="rss-channels-list__button full-button muted-button square-button"
+        <router-link
+          v-bind:to="'/channel/' + channel.id"
         >
-          {{ channel.title }}
-        </button>
+          <button 
+            class="rss-channels-list__button full-button muted-button square-button"
+          >
+            {{ channel.title }}
+          </button>
+        </router-link>
 
         <details class="rss-channels-list__options">
           <summary>Details</summary>
