@@ -1,8 +1,11 @@
 <template>
   <section id="rss-msg-card" class="">
     <h4>{{msg.title}}</h4>
-    <time :datetime="msg.isoDate">July 7</time>
-    <p>{{msg.contentSnippet}}</p>
+    <p class="card__p card__p--first">{{msg.isRead ? "Прочитано" : "Не прочитано"}}</p>
+    <time :datetime="msg.pubDate">Publication date: {{msg.pubDate}}</time>
+    <p class="card__p">Author: {{msg.author}}</p>
+    <p class="card__p">Categories: {{msg.categories}}</p>
+    <p class="card__p">{{msg.contentSnippet}}</p>
     <a :href="msg.link">link to origin</a>
   </section>
 </template>
@@ -24,5 +27,13 @@ export default {
 </script>
 
 <style scoped>
-  
+  .card__p {
+    margin: 0;
+    margin-top: 15px;
+  }
+
+  .card__p--first {
+    margin-bottom: 15px;
+    text-decoration: underline;
+  }
 </style>

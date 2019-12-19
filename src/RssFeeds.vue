@@ -3,7 +3,23 @@
     <h3 class="feed__header" v-if="errMsg != null">{{errMsg}}</h3>
     <div class="feed__wrapper" v-else>
       <h3 class="feed__header">{{feedTitle}}</h3>
-      <ul class="feed__list">
+      <p class="feed__p">URL: {{feedUrl}}</p>
+      <p class="feed__p">Description: {{feedDesc}}</p>
+      <p class="feed__p">Link: {{feedLink}}</p>
+      <p class="feed__p">Amoung of messages: <span class="feed__amount">{{channelMessages.length}}</span></p>
+      <label class="feed__label">
+        <input type="checkbox">
+        Show me only unread msg
+      </label>
+      <hr>
+
+      <ul class="feed__list" v-if="onlyUnread">
+        <li v-for="msg in channelMessages.filter(ch=>ch.isRead===false)" v-bind:key="msg.id">
+          <rss-msg-card :msg="msg"/>
+        </li>
+      </ul>
+      
+      <ul class="feed__list" v-else>
         <li v-for="msg in channelMessages" v-bind:key="msg.id">
           <rss-msg-card :msg="msg"/>
         </li>
@@ -20,10 +36,15 @@ export default {
   name: 'rss-feeds',
   data() {
     return {
-      feedTitle: "",
+      feedTitle: '',
+      feedUrl: '',
+      feedDesc: '',
+      feedLink: '',
       debag: this.$route.params.id,
-      channel: 1,
-      errMsg: null
+      channel: null,
+      errMsg: null,
+      channelMessages: [],
+      onlyUnread: false
     }
   },
   components: {
@@ -59,7 +80,12 @@ export default {
 
         let feed = await parser.parseURL(CORS_PROXY + link);
         this.feedTitle = feed.title;
+        this.feedUrl = feed.feedUrl;
+        this.feedDesc = feed.description;
+        this.feedLink = feed.link;
+        
         feed.items.forEach(item => {
+          item.isRead = false;
           this.channelMessages = [...this.channelMessages, item];
         });
 
@@ -82,5 +108,15 @@ export default {
   .feed__list {
     list-style: none;
     padding: 0;
+  }
+  .feed__p {
+    margin: 0;
+    margin-top: 15px;
+  }
+  .feed__amount {
+    font-weight: bold;
+  }
+  .feed__label {
+    cursor: pointer;
   }
 </style>
