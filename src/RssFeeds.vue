@@ -21,8 +21,8 @@ export default {
   data() {
     return {
       feedTitle: "",
-      test: 1,
-      channel: this.channels.find(channel => channel.id == this.$route.params.id),
+      debag: this.$route.params.id,
+      channel: 1,
       errMsg: null
     }
   },
@@ -68,9 +68,8 @@ export default {
 
   },
   created() {
-    // if (this.channel.)
+    this.channel = this.channels.find(channel => channel.id == this.$route.params.id)
     this.updateFeed(this.channel.link);
-    // this.$emit('updateFeed', this.channel.link);
   }
 }
 </script>

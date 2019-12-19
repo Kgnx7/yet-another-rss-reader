@@ -12,7 +12,7 @@
         <router-view
           name="rssFeeds"
           :channels="rssChannels"
-          :channelMessages="channelMessages"
+          :key="$route.path"
         />
         <router-view
           name="rssMsg"
