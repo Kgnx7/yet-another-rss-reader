@@ -1,6 +1,6 @@
 <template>
   <article id="rss-feeds" class="main__article flex-large">
-    <h3 class="feed__header" v-if="errMsg != null">{{errMsg}}</h3>
+    <h3 class="feed__header" v-if="msg != null">{{msg}}</h3>
     <div class="feed__wrapper" v-else>
       <h3 class="feed__header">{{feedTitle}}</h3>
       <p class="feed__p">URL: {{feedUrl}}</p>
@@ -42,9 +42,10 @@ export default {
       feedLink: '',
       debag: this.$route.params.id,
       channel: null,
-      errMsg: null,
+      msg: null,
       channelMessages: [],
-      onlyUnread: false
+      onlyUnread: false,
+      isLoading: false
     }
   },
   components: {
@@ -67,17 +68,17 @@ export default {
     },
     updateFeed(link) {
       if (!this.isURLValid(link)) {
-        this.errMsg = "URL is invalid";
+        this.msg = "URL is invalid";
         return;
       }
-      this.errMsg = null;
 
       const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
       let parser = new Parser();
       this.channelMessages = [];
+      // this.isLoading = true;
+      this.msg = "loading...";
 
       (async () => {
-
         let feed = await parser.parseURL(CORS_PROXY + link);
         this.feedTitle = feed.title;
         this.feedUrl = feed.feedUrl;
@@ -89,6 +90,8 @@ export default {
           this.channelMessages = [...this.channelMessages, item];
         });
 
+        // this.isLoading = false;
+        this.msg = null;
       })();
     },
 
