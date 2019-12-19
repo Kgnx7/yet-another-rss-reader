@@ -18,6 +18,8 @@
           <div class="options__wrapper">
             <p class="rss-channels-link__p">Rss channel link: <a :href="channel.link"><small class="rss-channels-list__link">{{ channel.link }}</small></a></p>
 
+            <p class="rss-channels-link__p"></p>
+
             <button 
               class="rss-channels-list__button rss-channels-list__button--remove muted-button square-button" 
               @click="handleDeleteChannel(channel.id)"
