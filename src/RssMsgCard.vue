@@ -5,9 +5,8 @@
     <time :datetime="msg.pubDate">Publication date: {{msg.pubDate}}</time>
     <p class="card__p">Author: {{msg.author}}</p>
     <p class="card__p">Categories: {{msg.categories}}</p>
-    <!-- <p class="card__p">{{msg.contentSnippet}}</p> -->
     <router-link
-      :to="{ name: 'msg', params: { msg: msg, msgid: msg.id, markAsRead: markAsRead }}"
+      :to="{ name: 'msg', params: { msg: msg, mid: msg.id, cid: channel.id, markAsRead: markAsRead }}"
     >
       read more
     </router-link>
@@ -27,6 +26,7 @@ export default {
   },
   props: {
     msg: Object,
+    channel: Object
   },
   methods: {
     markAsRead() {
