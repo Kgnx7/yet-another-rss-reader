@@ -1,7 +1,10 @@
 <template>
   <aside id="rss-channels" class="flex-small main__aside">
     <rss-channel-form @handleFormSubmit="handleFormSubmit"/>
-    <rss-channels-list v-bind:channels="channels" @handleChannelClick="handleChannelClick"/>
+    <rss-channels-list 
+      v-bind:channels="channels"
+      @handleDeleteChannel="handleDeleteChannel"
+    />
   </aside>
 </template>
 
@@ -19,8 +22,8 @@ export default {
     channels: Array,
   },
   methods: {
-    handleChannelClick(id) {
-      this.$emit("changeCurrentChannel", id);
+    handleDeleteChannel(id) {
+      this.$emit("handleDeleteChannel", id);
     },
     handleFormSubmit(newChannel) {
       this.$emit('addRssChannel', newChannel)
