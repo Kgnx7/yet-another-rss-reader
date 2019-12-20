@@ -5,7 +5,12 @@
     <time :datetime="msg.pubDate">Publication date: {{msg.pubDate}}</time>
     <p class="card__p">Author: {{msg.author}}</p>
     <p class="card__p">Categories: {{msg.categories}}</p>
-    <p class="card__p">{{msg.contentSnippet}}</p>
+    <!-- <p class="card__p">{{msg.contentSnippet}}</p> -->
+    <router-link
+      :to="{ name: 'msg', params: { msg: msg, msgid: msg.id, markAsRead: markAsRead }}"
+    >
+      read more
+    </router-link>
     <a :href="msg.link">link to origin</a>
   </section>
 </template>
@@ -21,8 +26,13 @@ export default {
   components: {
   },
   props: {
-    msg: Object
+    msg: Object,
   },
+  methods: {
+    markAsRead() {
+      this.msg.isRead = true;
+    }
+  }
 }
 </script>
 

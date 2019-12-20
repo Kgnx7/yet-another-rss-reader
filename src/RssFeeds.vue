@@ -7,23 +7,25 @@
       <p class="feed__p">Description: {{feedDesc}}</p>
       <p class="feed__p">Link: {{feedLink}}</p>
       <p class="feed__p">Amoung of messages: <span class="feed__amount">{{channelMessages.length}}</span></p>
+      <p class="feed__p">Amoung of authors: <span class="feed__amount">{{authors.size}}</span></p>
       <label class="feed__label">
-        <input type="checkbox">
+        <input type="checkbox" v-model="onlyUnread">
         Show me only unread msg
       </label>
       <hr>
-
-      <ul class="feed__list" v-if="onlyUnread">
-        <li v-for="msg in channelMessages.filter(ch=>ch.isRead===false)" v-bind:key="msg.id">
-          <rss-msg-card :msg="msg"/>
-        </li>
-      </ul>
+      <keep-alive>
+        <ul class="feed__list" v-if="onlyUnread">
+          <li v-for="msg in channelMessages.filter(ch=>ch.isRead===false)" v-bind:key="msg.id">
+            <rss-msg-card :msg="msg"/>
+          </li>
+        </ul>
+        <ul class="feed__list" v-else>
+          <li v-for="msg in channelMessages" v-bind:key="msg.id">
+            <rss-msg-card :msg="msg"/>
+          </li>
+        </ul>
+      </keep-alive>
       
-      <ul class="feed__list" v-else>
-        <li v-for="msg in channelMessages" v-bind:key="msg.id">
-          <rss-msg-card :msg="msg"/>
-        </li>
-      </ul>
     </div>
   </article>
 </template>
@@ -45,7 +47,8 @@ export default {
       msg: null,
       channelMessages: [],
       onlyUnread: false,
-      isLoading: false
+      isLoading: false,
+      authors: new Set()
     }
   },
   components: {
@@ -85,9 +88,11 @@ export default {
         this.feedDesc = feed.description;
         this.feedLink = feed.link;
         
-        feed.items.forEach(item => {
+        feed.items.forEach((item, i) => {
           item.isRead = false;
+          item.id = i+1;
           this.channelMessages = [...this.channelMessages, item];
+          this.authors.add(item.author);
         });
 
         // this.isLoading = false;
@@ -97,7 +102,7 @@ export default {
 
   },
   created() {
-    this.channel = this.channels.find(channel => channel.id == this.$route.params.id)
+    this.channel = this.channels.find(channel => channel.id == this.$route.params.id);
     this.updateFeed(this.channel.link);
   }
 }
