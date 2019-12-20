@@ -52,12 +52,12 @@ export default {
         {
           id: 1,
           title: "Reddit: the front page of the internet",
-          link: 'https://www.reddit.com/.rss'
+          link: 'https://www.reddit.com/r/programming.rss'
         },
         {
           id: 2,
           title: "Новые вопросы на StackOverflow",
-          link: 'https://stackoverflow.com/feeds/tag?tagnames=stl&sort=newest'
+          link: 'https://stackoverflow.com/feeds/tag?tagnames=javascript&sort=newest'
         },
       ],
       channelMessages: [],

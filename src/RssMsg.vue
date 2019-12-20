@@ -30,6 +30,7 @@
           :stroke-dashoffset="`${strokeDashoffset}`"
         />
       </svg>
+      <p class="circle__label"> - Percentage of latin characters in the main content</p>
    </details>
    <p class="rss-msg__p">Link: {{$route.params.msg.link}}</p>
    <p class="rss-msg__p">Publication date: {{$route.params.msg.pubDate}}</p>
@@ -45,7 +46,8 @@ export default {
   data() {
     return {
       circumference: 52 * 2 * Math.PI,
-      strokeDashoffset: this.circumference
+      strokeDashoffset: this.circumference,
+      debag: 0
     }
   },
   components: {
@@ -54,14 +56,17 @@ export default {
     msg: Object,
   },
   methods: {
-    setProgress(percent) {
+    setProgress(percent=0) {
       const offset = this.circumference - percent / 100 * this.circumference;
       this.strokeDashoffset = offset;
     }
   },
   created() {
     this.$route.params.markAsRead();
-    this.setProgress(12);
+
+    this.setProgress(this.$route.params.msg.contentSnippet.split('').reduce((acc, ch) => {
+      return ch.charCodeAt(0) >= 97 && ch.charCodeAt(0) <= 122 ? acc + 1 : acc;
+    }, 0));
   },
 }
 </script>
@@ -85,5 +90,18 @@ export default {
     transition: 0.35s stroke-dashoffset;
     transform: rotate(-90deg);
     transform-origin: 50% 50%;
+  }
+  .circle__label {
+    margin-left: 15px;
+    position: relative;
+  }
+  .circle__label:before {
+    content: "";
+    position: absolute;
+    top: calc(50% - 5px);
+    left: -15px;
+    width: 10px;
+    height: 10px;
+    background-color: #2962FF;
   }
 </style>
