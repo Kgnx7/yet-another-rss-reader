@@ -16,12 +16,12 @@
       <keep-alive>
         <ul class="feed__list" v-if="onlyUnread">
           <li v-for="msg in channelMessages.filter(ch=>ch.isRead===false)" v-bind:key="msg.id">
-            <rss-msg-card :msg="msg"/>
+            <rss-msg-card :msg="msg" :channel="channel"/>
           </li>
         </ul>
         <ul class="feed__list" v-else>
           <li v-for="msg in channelMessages" v-bind:key="msg.id">
-            <rss-msg-card :msg="msg"/>
+            <rss-msg-card :msg="msg" :channel="channel"/>
           </li>
         </ul>
       </keep-alive>
@@ -43,7 +43,7 @@ export default {
       feedDesc: '',
       feedLink: '',
       debag: this.$route.params.id,
-      channel: null,
+      channel: {},
       msg: null,
       channelMessages: [],
       onlyUnread: false,
@@ -77,7 +77,7 @@ export default {
 
       const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
       let parser = new Parser();
-      this.channelMessages = [];
+      // this.channelMessages = [];
       // this.isLoading = true;
       this.msg = "loading...";
 

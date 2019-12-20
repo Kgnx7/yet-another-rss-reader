@@ -7,10 +7,10 @@ export default [
     path: '/', components: {selectChannelMsg: selectChannel},
   },
   {
-    path: '/channel/:id', components: {rssFeeds: RssFeeds}, props: true,
+    path: '/channel/:id', components: {rssFeeds: RssFeeds}, props: true
   },
   {
-    path: '/channel/:id/msg/:msgid', name: 'msg', components: {rssMsg: rssMsg}, props: true,
+    path: '/channel/:cid/msg/:mid', name: 'msg', components: {rssMsg: rssMsg}, props: true,
   },
   {
     path: '*', redirect: '/'
