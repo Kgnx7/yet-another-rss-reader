@@ -2,6 +2,35 @@
  <article id="rss-msg" class="main__article flex-large">
    <a @click="$router.go(-1)">back</a>
    <h2>{{$route.params.msg.title}}</h2>
+   <details>
+     <summary>Statistics</summary>
+
+     <svg
+        class="progress-ring"
+        width="120"
+        height="120">
+        <circle
+          class="progress-ring__circle"
+          stroke="#eee"
+          stroke-width="4"
+          fill="transparent"
+          r="52"
+          cx="60"
+          cy="60"
+        />
+        <circle
+          class="progress-ring__circle"
+          stroke="#2962FF"
+          stroke-width="4"
+          fill="transparent"
+          r="52"
+          cx="60"
+          cy="60"
+          :stroke-dasharray="`${circumference} ${circumference}`"
+          :stroke-dashoffset="`${strokeDashoffset}`"
+        />
+      </svg>
+   </details>
    <p class="rss-msg__p">Link: {{$route.params.msg.link}}</p>
    <p class="rss-msg__p">Publication date: {{$route.params.msg.pubDate}}</p>
    <p class="rss-msg__p">Authors: {{$route.params.msg.creator}}</p>
@@ -15,7 +44,8 @@ export default {
   name: 'rss-msg',
   data() {
     return {
-     
+      circumference: 52 * 2 * Math.PI,
+      strokeDashoffset: this.circumference
     }
   },
   components: {
@@ -23,8 +53,15 @@ export default {
   props: {
     msg: Object,
   },
+  methods: {
+    setProgress(percent) {
+      const offset = this.circumference - percent / 100 * this.circumference;
+      this.strokeDashoffset = offset;
+    }
+  },
   created() {
     this.$route.params.markAsRead();
+    this.setProgress(12);
   },
 }
 </script>
