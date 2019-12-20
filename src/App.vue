@@ -4,22 +4,24 @@
       <header-comp :title="title" :desc="desc"/>
 
       <main class="main flex-row">
-        <rss-channels 
-          :channels="rssChannels"
-          @handleDeleteChannel="deleteChannel"
-          @addRssChannel="addRssChannel"
-        />
-        <router-view
-          name="rssFeeds"
-          :channels="rssChannels"
-          :key="$route.path"
-        />
-        <router-view
-          name="rssMsg"
-        />
-        <router-view
-          name="selectChannelMsg"
-        />
+          <rss-channels 
+            :channels="rssChannels"
+            @handleDeleteChannel="deleteChannel"
+            @addRssChannel="addRssChannel"
+          />
+          <keep-alive>
+            <router-view
+              name="rssFeeds"
+              :channels="rssChannels"
+              :key="$route.path"
+            />
+          </keep-alive>
+          <router-view
+            name="rssMsg"
+          />
+          <router-view
+            name="selectChannelMsg"
+          />
       </main>
 
       <footer-comp />
@@ -28,7 +30,6 @@
 </template>
 
 <script>
-// import Parser from "rss-parser"
 import HeaderComp from "./Header.vue"
 import RssChannels from "./RssChannels.vue"
 import FooterComp from "./Footer.vue"
@@ -51,12 +52,12 @@ export default {
         {
           id: 1,
           title: "Reddit: the front page of the internet",
-          link: 'https://www.reddit.com/.rss'
+          link: 'https://www.reddit.com/r/programming.rss'
         },
         {
           id: 2,
           title: "Новые вопросы на StackOverflow",
-          link: 'https://stackoverflow.com/feeds/tag?tagnames=stl&sort=newest'
+          link: 'https://stackoverflow.com/feeds/tag?tagnames=javascript&sort=newest'
         },
       ],
       channelMessages: [],
